@@ -1,4 +1,4 @@
-import type { Mode } from "context/index";
+import type { Mode } from "types/index";
 
 export const apiStatus = {
   getById: () => 200,
@@ -13,4 +13,7 @@ export const apiRoutes = {
   setTheme: (theme: Mode) => `/api/theme/set_theme?theme=${theme}`,
   getTheme: () => `/api/theme/get_theme`,
   whoAmI: () => `/api/whoami`,
+  getTasks: () => `/api/task`,
+  getTaskById: (id: string) => `/api/task/${id}`,
+  getTaskDetailsWithMutation: (id: string) => `/api/task/${id}`,
 };

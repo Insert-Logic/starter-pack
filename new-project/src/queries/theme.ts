@@ -1,8 +1,8 @@
-import type { Mode } from 'context/index';
+import type { Mode } from 'types/index';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import type { UseQueryOptions } from '@tanstack/react-query';
 import { apiRoutes } from '.';
-// import { toast } from 'ui/use-toast';
+;
 
 const service = {
   getTheme: async function () {
@@ -32,13 +32,7 @@ const service = {
 export function useSetThemeMutation() {
   return useMutation({
     mutationFn: service.setTheme,
-    onError: (error, _) => {
-    //   toast({
-    //     variant: 'destructive',
-    //     title: 'FAILED to set theme',
-    //     description: `Reason:  ${error.message}`,
-    //   });
-    },
+    onError: () => {},
   });
 }
 
@@ -47,16 +41,6 @@ export function useGetThemeQuery() {
     queryKey: ['get_theme'],
     queryFn: service.getTheme,
     retry: false,
-    onSettled: (data: Mode, error: Error) => {
-      if (error) {
-        // toast({
-        //   variant: 'destructive',
-        //   title: 'FAILED to get theme',
-        //   description: `Reason: ${error.message}`,
-        // });
-      } else {
-        console.log(data);
-      }
-    },
+    onSettled: () => {},
   } as UseQueryOptions<any, Error>);
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import { useWhoAmIQuery } from 'queries/user';
-import type { User } from 'context/index';
+import type { User } from 'types/index';
 import { createContext, useContext } from 'react';
 import type { ReactNode } from 'react';
 

@@ -6,12 +6,12 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [TanStackRouterVite({ target: 'react', autoCodeSplitting: true }), react(), tailwindcss()],
+  plugins: [TanStackRouterVite({ target: 'react',routesDirectory: 'src/logics', autoCodeSplitting: true }), react(), tailwindcss()],
   resolve: {
     alias: {
       components: path.resolve(__dirname, 'src/components'),
       queries: path.resolve(__dirname, 'src/queries'),
-      context: path.resolve(__dirname, '../context'),
+      types: path.resolve(__dirname, 'src/types'),
       util: path.resolve(__dirname, 'src/util'),
     },
   },

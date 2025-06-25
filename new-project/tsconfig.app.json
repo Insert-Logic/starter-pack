@@ -7,7 +7,7 @@
     "module": "ESNext",
     "skipLibCheck": true,
      "paths": {
-      "context/*": ["../context/*"],
+      "types/*": ["./src/types/*"],
       "components/*": ["./src/components/*"],
       "queries/*": ["./src/queries/*"],
       "util/*": ["./src/util/*"],
@@ -29,5 +29,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src"]
+  "include": ["src", "tailwind.config.ts"]
 }

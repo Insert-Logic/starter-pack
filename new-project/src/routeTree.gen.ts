@@ -8,49 +8,65 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as TasksUi1IdIndexRouteImport } from './routes/tasks/ui1/$id/index'
+import { Route as rootRouteImport } from './logics/__root'
+import { Route as YourLogicRouteRouteImport } from './logics/your-logic/route'
+import { Route as IndexRouteImport } from './logics/index'
+import { Route as YourLogicUi1IdIndexRouteImport } from './logics/your-logic/ui-1/$id/index'
 
+const YourLogicRouteRoute = YourLogicRouteRouteImport.update({
+  id: '/your-logic',
+  path: '/your-logic',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const TasksUi1IdIndexRoute = TasksUi1IdIndexRouteImport.update({
-  id: '/tasks/ui1/$id/',
-  path: '/tasks/ui1/$id/',
-  getParentRoute: () => rootRouteImport,
+const YourLogicUi1IdIndexRoute = YourLogicUi1IdIndexRouteImport.update({
+  id: '/ui-1/$id/',
+  path: '/ui-1/$id/',
+  getParentRoute: () => YourLogicRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/tasks/ui1/$id': typeof TasksUi1IdIndexRoute
+  '/your-logic': typeof YourLogicRouteRouteWithChildren
+  '/your-logic/ui-1/$id': typeof YourLogicUi1IdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/tasks/ui1/$id': typeof TasksUi1IdIndexRoute
+  '/your-logic': typeof YourLogicRouteRouteWithChildren
+  '/your-logic/ui-1/$id': typeof YourLogicUi1IdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/tasks/ui1/$id/': typeof TasksUi1IdIndexRoute
+  '/your-logic': typeof YourLogicRouteRouteWithChildren
+  '/your-logic/ui-1/$id/': typeof YourLogicUi1IdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/tasks/ui1/$id'
+  fullPaths: '/' | '/your-logic' | '/your-logic/ui-1/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/tasks/ui1/$id'
-  id: '__root__' | '/' | '/tasks/ui1/$id/'
+  to: '/' | '/your-logic' | '/your-logic/ui-1/$id'
+  id: '__root__' | '/' | '/your-logic' | '/your-logic/ui-1/$id/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  TasksUi1IdIndexRoute: typeof TasksUi1IdIndexRoute
+  YourLogicRouteRoute: typeof YourLogicRouteRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/your-logic': {
+      id: '/your-logic'
+      path: '/your-logic'
+      fullPath: '/your-logic'
+      preLoaderRoute: typeof YourLogicRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -58,19 +74,31 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/tasks/ui1/$id/': {
-      id: '/tasks/ui1/$id/'
-      path: '/tasks/ui1/$id'
-      fullPath: '/tasks/ui1/$id'
-      preLoaderRoute: typeof TasksUi1IdIndexRouteImport
-      parentRoute: typeof rootRouteImport
+    '/your-logic/ui-1/$id/': {
+      id: '/your-logic/ui-1/$id/'
+      path: '/ui-1/$id'
+      fullPath: '/your-logic/ui-1/$id'
+      preLoaderRoute: typeof YourLogicUi1IdIndexRouteImport
+      parentRoute: typeof YourLogicRouteRoute
     }
   }
 }
 
+interface YourLogicRouteRouteChildren {
+  YourLogicUi1IdIndexRoute: typeof YourLogicUi1IdIndexRoute
+}
+
+const YourLogicRouteRouteChildren: YourLogicRouteRouteChildren = {
+  YourLogicUi1IdIndexRoute: YourLogicUi1IdIndexRoute,
+}
+
+const YourLogicRouteRouteWithChildren = YourLogicRouteRoute._addFileChildren(
+  YourLogicRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  TasksUi1IdIndexRoute: TasksUi1IdIndexRoute,
+  YourLogicRouteRoute: YourLogicRouteRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

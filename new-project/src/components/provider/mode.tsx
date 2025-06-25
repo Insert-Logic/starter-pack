@@ -2,7 +2,7 @@
 
 import { createContext, useState, useContext } from 'react';
 import type { ReactNode } from 'react';
-import type { Mode } from 'context/index';
+import type { Mode } from 'types/index';
 import { useSetThemeMutation } from 'queries/theme';
 
 export interface ModeProviderProps {

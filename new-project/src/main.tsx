@@ -6,7 +6,7 @@ import { createRouter, RouterProvider } from '@tanstack/react-router';
 import ModeProvider from 'components/provider/mode';
 import UserProvider from 'components/provider/user';
 import QueryProvider, { client } from 'components/provider/query';
-import type { Mode } from 'context/index';
+import type { Mode } from './types';
 import { QueryClient } from '@tanstack/react-query';
 const router = createRouter({ routeTree, context: { queryClient: client } });
 
