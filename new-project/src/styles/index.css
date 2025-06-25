@@ -1,0 +1,116 @@
+@import 'tailwindcss';
+@import "@insertlogic/o8-lib/o8-lib.css";
+/* @source '../components*.{js,ts,jsx,tsx,mdx}'; */
+
+.dark {
+  --border: #ffffff0d;
+  --input: #3d3d3d;
+  --ring: #667085cc;
+  --background: #262626;
+  --foreground: #3d3d3d;
+  --primary: #00bfad;
+  --on-primary: #fff;
+  --secondary: #3d3d3d;
+  --on-secondary: #fff;
+  --destructive: #f97970;
+  --on-destructive: #fff;
+  --muted: #66708529;
+  --on-muted: #344054;
+  --warning: #fdb022;
+  --on-warning: #fff;
+  --success: #06e16f;
+  --on-success: #0c5551;
+  --accent: #086762;
+  --on-accent: #8effed;
+  --popover: #3d3d3d;
+  --on-popover: #eef0f0;
+  --card: #3d3d3d;
+  --on-card: #eef0f0;
+  --body: #d9dede;
+  --on-background: #fff;
+  --on-foreground: #eef0f0;
+  --header: #fff;
+  --subtitle: #929e9d;
+  --overlay-5: #0000000d;
+  --overlay-10: #00000033;
+  --overlay-30: #00000066;
+  --overlay-50: #00000080;
+  --overlay-70: #000000b3;
+  --sidebar: #3d3d3d;
+  --on-sidebar: #d9dede;
+  --on-sidebar-search: #262626;
+  --navbar: #262626;
+  --on-navbar: #d9dede;
+  --on-navbar-search: #3d3d3d;
+  --on-side-bar: #d9dede;
+  --on-side-bar-search: #262626;
+  --table-header: #343434;
+}
+
+.light {
+  --border: #0000001a;
+  --input: #fff;
+  --ring: #667085cc;
+  --background: #f1f5f9;
+  --foreground: #fff;
+  --primary: #00bfad;
+  --on-primary: #fff;
+  --secondary: #fff;
+  --on-secondary: #3d3d3d;
+  --destructive: #f04438;
+  --on-destructive: #fff;
+  --muted: #66708529;
+  --on-muted: #344054;
+  --warning: #fdb022;
+  --on-warning: #fff;
+  --success: #06e16f;
+  --on-success: #0c5551;
+  --accent: #c6fff5;
+  --on-accent: #02837b;
+  --popover: #fff;
+  --on-popover: #3d3d3d;
+  --card: #fff;
+  --on-card: #3d3d3d;
+  --body: #4f4f4f;
+  --on-background: #262626;
+  --on-foreground: #3d3d3d;
+  --header: #262626;
+  --subtitle: #748382;
+  --overlay-5: #0000000d;
+  --overlay-10: #0000001a;
+  --overlay-30: #0000004d;
+  --overlay-50: #00000080;
+  --overlay-70: #000000b3;
+  --sidebar: #fff;
+  --on-sidebar: #d9dede;
+  --on-sidebar-search: #262626;
+  --navbar: #f7f8f8;
+  --on-navbar: #4f4f4f;
+  --on-navbar-search: #ffffff;
+  --on-side-bar: #d9dede;
+  --on-side-bar-search: #262626;
+  --table-header: #f1f5f9;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--on-background);
+}
+
+.scrollbar {
+  scrollbar-color: rgba(107, 114, 128, 0.7) transparent; /* Firefox */
+}
+
+/* Chrome, Safari, Edge */
+.scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(107, 114, 128, 0.7); /* Tailwind gray-500 with opacity */
+  border-radius: 9999px;
+}

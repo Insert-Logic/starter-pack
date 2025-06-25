@@ -1,0 +1,8 @@
+.gitignore
+node_modules
+.npmrc
+.eslintrc.j
+package.json
+pnpm*
+env*
+README.md
