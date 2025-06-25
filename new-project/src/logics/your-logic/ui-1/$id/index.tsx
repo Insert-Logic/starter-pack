@@ -1,4 +1,4 @@
-import { createFileRoute, useLoaderData } from '@tanstack/react-router'
+import { createFileRoute } from '@tanstack/react-router'
 import type { SidebarData } from '../../-context';
 import Sidebar from 'components/sidebar';
 import { SidebarDetails, SidebarDetailsMobile } from 'components/sidebar-details';
@@ -9,7 +9,7 @@ export const Route = createFileRoute('/your-logic/ui-1/$id/')({
 })
 
 function RouteComponent() {
-    const data = useLoaderData({ from: Route.id });
+    // const data = useLoaderData({ from: Route.id });
     const sidebarData: SidebarData = {name:''}; 
 
     return (

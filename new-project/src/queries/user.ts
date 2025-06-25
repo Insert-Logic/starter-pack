@@ -1,8 +1,8 @@
-import type { User } from 'context/index';
+import type { User } from 'types/index';
 import { useQuery } from '@tanstack/react-query';
 import type { UseQueryOptions } from '@tanstack/react-query';
 import { apiRoutes } from '.';
-// import {  } from '@insertlogic/o8-lib'
+
 
 const service = {
   whoAmI: async function () {
@@ -23,14 +23,6 @@ export function useWhoAmIQuery() {
     queryKey: ['whoAmI'],
     queryFn: service.whoAmI,
     retry: false,
-    onSettled: (_data: User, error: Error) => {
-      // if (error) {
-      //   toast({
-      //     variant: 'destructive',
-      //     title: 'FAILED to get user info',
-      //     description: `Reason: ${error.message}`,
-      //   });
-      // }
-    },
+    onSettled: () => {},
   } as UseQueryOptions<User, Error>);
 }
