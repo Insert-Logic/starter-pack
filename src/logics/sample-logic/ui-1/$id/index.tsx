@@ -1,10 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router'
-import type { SidebarData } from '../../-context';
+import type { SidebarData } from '../../../sample-logic/-context';
 import Sidebar from 'components/sidebar';
 import { SidebarDetails, SidebarDetailsMobile } from 'components/sidebar-details';
 import { stagesSidebar } from '../../../-util';
 
-export const Route = createFileRoute('/your-logic/ui-1/$id/')({
+export const Route = createFileRoute('/sample-logic/ui-1/$id/')({
   component: RouteComponent,
 })
 
