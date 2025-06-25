@@ -1,6 +1,6 @@
 import type { Task } from 'types/index';
 
-// @logic-context
+//@logic-context
 export type YourLogic = {
 
 };
