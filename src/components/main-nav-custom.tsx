@@ -1,6 +1,6 @@
 'use client';
 
-import NavigationLink from './navigation-link';
+import { NavigationLink } from '@insertlogic/o8-lib';
 import Logo_dark from '../assets/logo_dark.svg';
 import Logo_light from '../assets/logo_light.svg';
 import {
@@ -11,9 +11,9 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from '@insertlogic/o8-lib';
-import Icon from './icons';
-import ThemeChanger from './theme-changer';
-import { useMode } from './provider/mode';
+import { Icon } from '@insertlogic/o8-lib';
+import { ThemeChanger } from '@insertlogic/o8-lib';
+import { useMode } from '@insertlogic/o8-lib';
 
 const SettingsMenuContent = () => {
   return (
@@ -46,7 +46,7 @@ const MainNav = () => {
           ) : (
             <img src={Logo_light} alt="Logo" style={{ width: 'auto', height: 'auto' }} />
           )}
-        </NavigationLink>
+         </NavigationLink>
       </div>
       <div className="flex flex-row items-center gap-4">
         <ThemeChanger color="on-card" />

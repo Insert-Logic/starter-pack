@@ -1,7 +1,7 @@
 import { createRootRouteWithContext, Outlet } from '@tanstack/react-router';
 import { QueryClient } from '@tanstack/react-query';
-import { MainNav } from 'components/main-nav';
-import Footer from 'components/footer';
+import { MainNav, Toaster } from '@insertlogic/o8-lib';
+import { Footer } from '@insertlogic/o8-lib';
 
 export type RouterContext = {
   queryClient: QueryClient;
@@ -9,16 +9,20 @@ export type RouterContext = {
 
 export const Route = createRootRouteWithContext<RouterContext>()({
   component: () => (
-   <main className="bg-background z-0 flex h-full w-full shrink-0 grow basis-0 flex-col items-center justify-between self-stretch">
-        <div key={'navbar'} className="bg-card items-center justify-between self-stretch px-6">
+    <>
+      <main className="flex h-full w-full flex-col">
+        <div className="bg-card shrink-0 px-10">
           <MainNav />
         </div>
-        <div className="flex h-auto w-full grow flex-col self-stretch overflow-y-auto">
+        <div className="min-h-0 w-full flex-1 grow overflow-hidden">
           <Outlet />
         </div>
-        <div className="bg-card items-center justify-end self-stretch px-6">
+        <div className="bg-card shrink-0 px-10">
           <Footer />
         </div>
       </main>
+      {/* <TanStackRouterDevtools /> */}
+      <Toaster />
+    </>
   ),
 });
