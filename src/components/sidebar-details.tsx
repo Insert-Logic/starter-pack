@@ -1,3 +1,5 @@
+// For the custom details you want to show in the sidebar
+
 
 type SidebarDetails = {
   data?: any;

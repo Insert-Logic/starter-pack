@@ -1,18 +1,15 @@
 'use client';
 
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import type { ReactNode } from 'react';
+import { QueryProvider, client } from '@insertlogic/o8-lib';
+import { QueryClientProvider } from '@tanstack/react-query';
 
-export const client = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: 2,
-      retryDelay: 1000,
-    },
-  },
-});
-
-const QueryProvider = ({ children }: { children: React.ReactNode }) => {
-  return <QueryClientProvider client={client}>{children}</QueryClientProvider>;
+export const AppQueryProvider = ({ children }: { children: ReactNode }) => {
+  return (
+    <QueryProvider>
+      <QueryClientProvider client={client}>{children}</QueryClientProvider>
+    </QueryProvider>
+  );
 };
 
-export default QueryProvider;
+export { client as queryClient };

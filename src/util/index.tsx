@@ -1,8 +1,10 @@
-import type {  StageInfoSidebar, ValidationErrors,  ZodParseResponse,} from 'types/index';
+import type { ValidationErrors,  ZodParseResponse,} from 'types/index';
 import { z, ZodEffects, ZodObject, type ZodRawShape, type ZodTypeAny } from 'zod';
 import { fromZodError } from 'zod-validation-error';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import Cookies from 'js-cookie';
+import type { Mode } from '@insertlogic/o8-lib';
 
 export const zodParse = async <Schema extends z.ZodTypeAny, Input extends Record<any, any>>(
   schema: Schema,
@@ -124,29 +126,12 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const updateStages = (id: string, stages: StageInfoSidebar[]): StageInfoSidebar[] => {
-  let foundCurrent = false;
+export const getTheme = async (): Promise<Mode> => {
+  const theme = Cookies.get('theme');
 
-  return stages.map(stage => {
-    const hasSteps = stage.steps.length > 0;
-    const containsStep = stage.steps.some(step => step.id === id);
+  if (!theme) {
+    return 'light';
+  }
 
-    if (!hasSteps) {
-      return { ...stage, executed: true, current: false };
-    }
-
-    if (!foundCurrent && containsStep) {
-      foundCurrent = true;
-      return { ...stage, current: true, executed: false };
-    }
-
-    const updatedStage: StageInfoSidebar = {
-      ...stage,
-      current: false,
-      executed: !foundCurrent,
-    };
-
-    return updatedStage;
-  });
+  return theme as Mode;
 };
-

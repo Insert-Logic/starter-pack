@@ -1,14 +1,12 @@
 'use client';
 
-import { ActionAreaButtons } from './action-area-buttons';
-import { ActionAreaTitle } from './action-area-title';
+import { ActionAreaButtons } from '@insertlogic/o8-lib';
+import { ActionAreaTitle } from '@insertlogic/o8-lib';
 
 interface ActionAreaProps {
   children: React.ReactNode;
   title: string;
   caseId: string;
-  hasParent: boolean;
-  parentInfo?: { id: string; interfaceOption: string; runtimeId: string };
   onSubmit: () => void;
   isWithdrawPossible: boolean;
   onWithdrawn?: () => void;
@@ -20,8 +18,6 @@ export const ActionArea = ({
   children,
   title,
   caseId,
-  hasParent,
-  parentInfo,
   actionButtonsVisible = true,
   isWithdrawPossible,
   onWithdrawn,
@@ -29,14 +25,9 @@ export const ActionArea = ({
   onSubmit,
 }: ActionAreaProps) => {
   return (
-    <div className="flex w-full flex-col items-start gap-6 self-stretch">
-      <ActionAreaTitle
-        caseId={caseId}
-        title={title}
-        hasParent={hasParent}
-        parentInfo={parentInfo}
-      />
-      {children}
+    <div className="flex w-full grow flex-col items-start gap-6 self-stretch">
+      <ActionAreaTitle caseId={caseId} title={title} />
+      <div className="flex h-full w-full grow flex-col">{children}</div>
       {actionButtonsVisible && (
         <ActionAreaButtons
           isWithdrawPossible={isWithdrawPossible}
