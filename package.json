@@ -5,13 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "routes": "tanstack-router generate"
+    "serve": "vite preview",
+    "build": "vite build && tsc --noEmit"
   },
   "dependencies": {
-    "@insertlogic/o8-lib": "^1.0.11",
+    "@insertlogic/o8-lib": "^1.0.13",
     "@tailwindcss/vite": "^4.1.10",
     "@tanstack/react-query": "^5.80.7",
     "@tanstack/react-router": "^1.121.2",

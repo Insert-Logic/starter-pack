@@ -1,4 +1,4 @@
-import type { Mode } from "types/index";
+import type { Mode } from 'types/index';
 
 export const apiStatus = {
   getById: () => 200,
@@ -16,4 +16,5 @@ export const apiRoutes = {
   getTasks: () => `/api/task`,
   getTaskById: (id: string) => `/api/task/${id}`,
   getTaskDetailsWithMutation: (id: string) => `/api/task/${id}`,
+  removeTaskLock: (id: string) => `/api/task/lock//${id}`,
 };
