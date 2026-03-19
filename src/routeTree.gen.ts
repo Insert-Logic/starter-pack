@@ -9,10 +9,16 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './logics/__root'
+import { Route as ErrorRouteImport } from './logics/error'
 import { Route as SampleLogicRouteRouteImport } from './logics/sample-logic/route'
 import { Route as IndexRouteImport } from './logics/index'
 import { Route as SampleLogicUi1IdIndexRouteImport } from './logics/sample-logic/ui-1/$id/index'
 
+const ErrorRoute = ErrorRouteImport.update({
+  id: '/error',
+  path: '/error',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SampleLogicRouteRoute = SampleLogicRouteRouteImport.update({
   id: '/sample-logic',
   path: '/sample-logic',
@@ -32,34 +38,45 @@ const SampleLogicUi1IdIndexRoute = SampleLogicUi1IdIndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/sample-logic': typeof SampleLogicRouteRouteWithChildren
+  '/error': typeof ErrorRoute
   '/sample-logic/ui-1/$id': typeof SampleLogicUi1IdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/sample-logic': typeof SampleLogicRouteRouteWithChildren
+  '/error': typeof ErrorRoute
   '/sample-logic/ui-1/$id': typeof SampleLogicUi1IdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/sample-logic': typeof SampleLogicRouteRouteWithChildren
+  '/error': typeof ErrorRoute
   '/sample-logic/ui-1/$id/': typeof SampleLogicUi1IdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/sample-logic' | '/sample-logic/ui-1/$id'
+  fullPaths: '/' | '/sample-logic' | '/error' | '/sample-logic/ui-1/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/sample-logic' | '/sample-logic/ui-1/$id'
-  id: '__root__' | '/' | '/sample-logic' | '/sample-logic/ui-1/$id/'
+  to: '/' | '/sample-logic' | '/error' | '/sample-logic/ui-1/$id'
+  id: '__root__' | '/' | '/sample-logic' | '/error' | '/sample-logic/ui-1/$id/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   SampleLogicRouteRoute: typeof SampleLogicRouteRouteWithChildren
+  ErrorRoute: typeof ErrorRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/error': {
+      id: '/error'
+      path: '/error'
+      fullPath: '/error'
+      preLoaderRoute: typeof ErrorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sample-logic': {
       id: '/sample-logic'
       path: '/sample-logic'
@@ -98,6 +115,7 @@ const SampleLogicRouteRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SampleLogicRouteRoute: SampleLogicRouteRouteWithChildren,
+  ErrorRoute: ErrorRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

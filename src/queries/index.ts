@@ -1,4 +1,5 @@
-import type { Mode } from "types/index";
+import type { StageType } from '@insertlogic/o8-lib';
+import type { Mode } from 'types/index';
 
 export const apiStatus = {
   getById: () => 200,
@@ -13,7 +14,7 @@ export const apiRoutes = {
   setTheme: (theme: Mode) => `/api/theme/set_theme?theme=${theme}`,
   getTheme: () => `/api/theme/get_theme`,
   whoAmI: () => `/api/whoami`,
-  getTasks: () => `/api/task`,
-  getTaskById: (id: string) => `/api/task/${id}`,
-  getTaskDetailsWithMutation: (id: string) => `/api/task/${id}`,
+  getRuntimeByState: (state: StageType) => `/api/runtime?state=${state}`,
+  getRuntimeByQuery: (queryString: string) => `/api/runtime?${queryString}`,
+  createRuntime: (name: string) => `/api/runtime/create/logic_name/${name}`,
 };

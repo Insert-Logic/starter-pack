@@ -1,10 +1,11 @@
 import { createFileRoute, useLoaderData } from '@tanstack/react-router';
 import { SidebarDetails } from 'components/sidebar-details';
-import { MainContentLayout, taskService } from '@insertlogic/o8-lib';
-import { tasksMock } from '../../../-mock';
+import { ErrorLayout, MainContentLayout, runtimeService, type RuntimeByStateResponse } from '@insertlogic/o8-lib';
 import type { SidebarData } from '../../-context';
-import { stages } from '../../-util/logic-steps';
+import { stages } from '../../-shared/util/logic-steps';
 import { ExampleUI } from '../-components';
+import { tasksMock } from 'util/mock-data';
+import { PendingComponent } from 'components/pending-component';
 
 const service = {
   getById: async function (id: string) {
@@ -14,8 +15,25 @@ const service = {
       data.targetAssignment = { interfaceOption: 'first-step', _id: '', name: '' };
       return data;
     } else {
-      const data = await taskService.getById(id);
-      return data;
+      const tasks = (await runtimeService.getRuntimeByState('task')) as RuntimeByStateResponse[];
+      const currentTask = tasks.find(t => t._id === id);
+
+      // Create a flow to get context for task
+      // const newBody: GetInphasingContext = {
+      //   runtimeId: id,
+      //   workQueue: workQueue,
+      // };
+
+      // const contextResponse = (await runtimeService.create({
+      //   name: 'get-in-phasing-context',
+      //   body: newBody,
+      // })) as any;
+      // const newTask = {
+      //   ...currentTask,
+      //   context: contextResponse.context.context,
+      // };
+
+      return currentTask;
     }
   },
 };
@@ -25,6 +43,19 @@ export const Route = createFileRoute('/sample-logic/ui-1/$id/')({
     const id = params.id!;
     return await service.getById(id);
   },
+  //EXAMPLE OF QUERY DATA
+
+  // loader: ({ context }) =>
+  //   context.queryClient.fetchQuery({
+  //     queryKey: ['get-projects'],
+  //     queryFn: () =>
+  //       runtimeService.create({
+  //         name: 'mtt-handle-project-storage',
+  //         body: getProjectsBody,
+  //       }),
+  //   }),
+  pendingComponent: () => <PendingComponent />,
+  errorComponent: ErrorLayout,
   component: RouteComponent,
 });
 
@@ -32,11 +63,13 @@ function RouteComponent() {
   const data = useLoaderData({ from: Route.id });
   const sidebarData: SidebarData = { name: 'Ola Nordmann' };
 
+  const context = data?.context;
+
   return (
     <MainContentLayout
-      currentStep={data.targetAssignment?.interfaceOption ?? ''}
+      currentStep={data?.targetAssignment?.interfaceOption ?? ''}
       steps={stages}
-      title={'Steps Overview'}
+      title={'Process Overview'}
       defaultCollapsed={false}
       keyDetails={<SidebarDetails data={sidebarData} />}
       keyDetailsDefaultCollapsed={true}
