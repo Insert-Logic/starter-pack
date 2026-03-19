@@ -1,10 +1,11 @@
 import { createFileRoute, useLoaderData } from '@tanstack/react-router';
 import { SidebarDetails } from 'components/sidebar-details';
-import { MainContentLayout, runtimeService, type RuntimeByStateResponse } from '@insertlogic/o8-lib';
-import { tasksMock } from '../../../-mock';
+import { ErrorLayout, MainContentLayout, runtimeService, type RuntimeByStateResponse } from '@insertlogic/o8-lib';
 import type { SidebarData } from '../../-context';
-import { stages } from '../../-util/logic-steps';
+import { stages } from '../../-shared/util/logic-steps';
 import { ExampleUI } from '../-components';
+import { tasksMock } from 'util/mock-data';
+import { PendingComponent } from 'components/pending-component';
 
 const service = {
   getById: async function (id: string) {
@@ -42,6 +43,19 @@ export const Route = createFileRoute('/sample-logic/ui-1/$id/')({
     const id = params.id!;
     return await service.getById(id);
   },
+  //EXAMPLE OF QUERY DATA
+
+  // loader: ({ context }) =>
+  //   context.queryClient.fetchQuery({
+  //     queryKey: ['get-projects'],
+  //     queryFn: () =>
+  //       runtimeService.create({
+  //         name: 'mtt-handle-project-storage',
+  //         body: getProjectsBody,
+  //       }),
+  //   }),
+  pendingComponent: () => <PendingComponent />,
+  errorComponent: ErrorLayout,
   component: RouteComponent,
 });
 
