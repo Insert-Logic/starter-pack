@@ -17,6 +17,7 @@ export default defineConfig({
       queries: path.resolve(__dirname, 'src/queries'),
       types: path.resolve(__dirname, 'src/types'),
       util: path.resolve(__dirname, 'src/util'),
+      logics: path.resolve(__dirname, 'src/logics'),
     },
   },
 });

@@ -10,7 +10,8 @@
       "types/*": ["./src/types/*"],
       "components/*": ["./src/components/*"],
       "queries/*": ["./src/queries/*"],
-      "util/*": ["./src/util/*"]
+      "util/*": ["./src/util/*"],
+      "logics/*": ["./src/logics/*"]
     },
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
