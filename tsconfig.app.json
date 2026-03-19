@@ -11,7 +11,9 @@
       "components/*": ["./src/components/*"],
       "queries/*": ["./src/queries/*"],
       "util/*": ["./src/util/*"],
-      "logics/*": ["./src/logics/*"]
+      "logics/*": ["./src/logics/*"],
+      "api/*": ["./src/logics/event-driven/*"],
+      "assets/*": ["./src/assets/*"]
     },
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
