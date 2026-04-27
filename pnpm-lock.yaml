@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@insertlogic/o8-lib':
-        specifier: ^1.0.14
-        version: 1.0.14(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react-is@16.13.1)(react@19.1.0)(redux@5.0.1)(tailwindcss@4.1.10)
+        specifier: ^1.0.15
+        version: 1.0.15(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react-is@16.13.1)(react@19.1.0)(redux@5.0.1)(tailwindcss@4.1.10)
       '@tailwindcss/vite':
         specifier: ^4.1.10
         version: 4.1.10(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3))
@@ -513,8 +513,8 @@ packages:
     resolution: {integrity: sha512-bV0Tgo9K4hfPCek+aMAn81RppFKv2ySDQeMoSZuvTASywNTnVJCArCZE2FWqpvIatKu7VMRLWlR1EazvVhDyhQ==}
     engines: {node: '>=18.18'}
 
-  '@insertlogic/o8-lib@1.0.14':
-    resolution: {integrity: sha512-xpQEeqLqPl4W+tUXywK0wzib+UEhsd4XWGM8Y3Na3GVFuyNvX4Qu8RksplAwbhk3Kd3PmjmLeXCpx+pTQA5rCA==}
+  '@insertlogic/o8-lib@1.0.15':
+    resolution: {integrity: sha512-YgY8k8uVQmkuI1kolmQc2OXCmHdWxNVkp1D6/QYQWNX1Fi5tFH/pi4piPPza5oK1yx/54z1cylfMLq3FkYQdHg==}
     peerDependencies:
       react: ^19.1.0
       react-dom: ^19.1.0
@@ -3749,7 +3749,7 @@ snapshots:
 
   '@humanwhocodes/retry@0.4.3': {}
 
-  '@insertlogic/o8-lib@1.0.14(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react-is@16.13.1)(react@19.1.0)(redux@5.0.1)(tailwindcss@4.1.10)':
+  '@insertlogic/o8-lib@1.0.15(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react-is@16.13.1)(react@19.1.0)(redux@5.0.1)(tailwindcss@4.1.10)':
     dependencies:
       '@dnd-kit/core': 6.3.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@dnd-kit/modifiers': 9.0.0(@dnd-kit/core@6.3.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)
@@ -4420,7 +4420,7 @@ snapshots:
   '@radix-ui/react-use-is-hydrated@0.1.0(@types/react@19.1.8)(react@19.1.0)':
     dependencies:
       react: 19.1.0
-      use-sync-external-store: 1.5.0(react@19.1.0)
+      use-sync-external-store: 1.6.0(react@19.1.0)
     optionalDependencies:
       '@types/react': 19.1.8
 
@@ -4706,7 +4706,7 @@ snapshots:
       '@swc/helpers': 0.5.17
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
-      use-sync-external-store: 1.5.0(react@19.1.0)
+      use-sync-external-store: 1.6.0(react@19.1.0)
 
   '@react-aria/link@3.8.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
@@ -5254,7 +5254,7 @@ snapshots:
     dependencies:
       '@swc/helpers': 0.5.17
       react: 19.1.0
-      use-sync-external-store: 1.5.0(react@19.1.0)
+      use-sync-external-store: 1.6.0(react@19.1.0)
 
   '@react-stately/toggle@3.8.5(react@19.1.0)':
     dependencies:
@@ -6632,7 +6632,7 @@ snapshots:
     dependencies:
       '@types/use-sync-external-store': 0.0.6
       react: 19.1.0
-      use-sync-external-store: 1.5.0(react@19.1.0)
+      use-sync-external-store: 1.6.0(react@19.1.0)
     optionalDependencies:
       '@types/react': 19.1.8
       redux: 5.0.1
@@ -6729,7 +6729,7 @@ snapshots:
       react-redux: 9.2.0(@types/react@19.1.8)(react@19.1.0)(redux@5.0.1)
       reselect: 5.1.1
       tiny-invariant: 1.3.3
-      use-sync-external-store: 1.5.0(react@19.1.0)
+      use-sync-external-store: 1.6.0(react@19.1.0)
       victory-vendor: 37.3.6
     transitivePeerDependencies:
       - '@types/react'
