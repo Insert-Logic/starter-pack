@@ -1,6 +1,4 @@
-import type { Task } from 'types/index';
-
-const createTransform = (context: Task) => {
+const createTransform = (context: any) => {
   console.log(context);
 };
 
