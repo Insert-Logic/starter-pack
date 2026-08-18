@@ -1,5 +1,3 @@
-'use client';
-
 import { ActionAreaButtons } from '@insertlogic/o8-lib';
 import { ActionAreaTitle } from '@insertlogic/o8-lib';
 

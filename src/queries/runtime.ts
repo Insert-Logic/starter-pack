@@ -1,11 +1,17 @@
 import { useQuery, type UseQueryOptions, type UseQueryResult } from '@tanstack/react-query';
-import { apiRoutes } from './index';
+import { apiRoutes, apiStatus } from './index';
 import type {
   RuntimeByStateResponse,
   RuntimeByWaitStateResponse,
   RuntimeResponse,
   StageType,
 } from '@insertlogic/o8-lib';
+
+type VisitNextInput = {
+  _id: string;
+  context: any;
+  redirect?: boolean;
+};
 
 export const runtimeService = {
   getRuntimeByState: async function (state: StageType) {
@@ -49,6 +55,25 @@ export const runtimeService = {
 
     if (!result.ok) {
       throw new Error(`Not created. Status is ${result.status}`);
+    }
+
+    return (await result.json()) as RuntimeResponse;
+  },
+  visitNext: async function ({ _id, context }: VisitNextInput) {
+    if (!_id) {
+      throw new Error(`Failed to send to next step. Couldn't find logic ID`);
+    }
+
+    const result = await fetch(apiRoutes.visitNext(_id.toString()), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(context),
+    });
+
+    if (result.status !== apiStatus.update()) {
+      throw new Error(`Failed to send to next step. Status is ${result.status}`);
     }
 
     return (await result.json()) as RuntimeResponse;

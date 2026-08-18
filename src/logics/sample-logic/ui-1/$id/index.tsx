@@ -1,18 +1,21 @@
 import { createFileRoute, useLoaderData } from '@tanstack/react-router';
 import { SidebarDetails } from 'components/sidebar-details';
-import { ErrorLayout, MainContentLayout, runtimeService, type RuntimeByStateResponse } from '@insertlogic/o8-lib';
+import {
+  ErrorLayout,
+  MainContentLayout,
+  PendingComponent,
+  runtimeService,
+  type RuntimeByStateResponse,
+} from '@insertlogic/o8-lib';
 import type { SidebarData } from '../../-context';
 import { stages } from '../../-shared/util/logic-steps';
 import { ExampleUI } from '../-components';
-import { tasksMock } from 'util/mock-data';
-import { PendingComponent } from 'components/pending-component';
 
 const service = {
   getById: async function (id: string) {
     if (id === 'preview') {
       // Return mock data
-      let data = tasksMock[0];
-      data.targetAssignment = { interfaceOption: 'first-step', _id: '', name: '' };
+      let data = { targetAssignment: { interfaceOption: 'first-step', _id: '', name: '' }, context: {} };
       return data;
     } else {
       const tasks = (await runtimeService.getRuntimeByState('task')) as RuntimeByStateResponse[];
