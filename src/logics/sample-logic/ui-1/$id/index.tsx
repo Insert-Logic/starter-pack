@@ -1,20 +1,30 @@
 import { createFileRoute, useLoaderData } from '@tanstack/react-router';
 import { SidebarDetails } from 'components/sidebar-details';
-import { ErrorLayout, MainContentLayout, PendingComponent } from '@insertlogic/o8-lib';
+import { AccessDeniedError, ErrorLayout, MainContentLayout, PendingComponent } from '@insertlogic/o8-lib';
 import { stages } from '../../-shared/util/logic-steps';
 import { ExampleUI } from '../-components';
 import { taskService } from 'queries/task';
+import type { CheckAccessById } from 'logics/event-driven/check-access-by-id/-context';
+import { runtimeService } from 'queries/runtime';
+import { getAccessDeniedMessage } from 'util/index';
 
 const service = {
   getById: async function (id: string) {
-    if (id === 'preview') {
-      // Return mock data for your UI
-      let data = { targetAssignment: { interfaceOption: 'first-step', _id: '', name: '' }, context: {} };
-      return data;
-    } else {
-      const task = await taskService.getById(id);
-      return task;
-    }
+    // Get current task
+    const data = await taskService.getById(id);
+    const currentWorkQueue = data.targetAssignment?.workQueue ?? '';
+    // Checkk access
+    const checkAccessBody: CheckAccessById = {
+      input: { id: id, workQueue: currentWorkQueue },
+    };
+    const accessDetailsResponse = await runtimeService.create({
+      name: 'check-access-by-id',
+      body: checkAccessBody,
+    });
+
+    const accessDetailsContext = accessDetailsResponse.context as CheckAccessById;
+    const accessDetails = accessDetailsContext.response;
+    return { data: data, accessDetails: accessDetails };
   },
 };
 
@@ -40,10 +50,20 @@ export const Route = createFileRoute('/sample-logic/ui-1/$id/')({
 });
 
 function RouteComponent() {
-  const data = useLoaderData({ from: Route.id });
+  // const { id } = Route.useParams();
+  const loaderData = useLoaderData({ from: Route.id });
+  const data = loaderData.data;
+  const accessDetails = loaderData.accessDetails;
+
+  if (accessDetails?.access !== true) {
+    const message = getAccessDeniedMessage(accessDetails?.userRoles ?? [], accessDetails?.allowedRoles ?? []);
+
+    return <AccessDeniedError description={message} />;
+  }
+
   const sidebarData = { name: 'Ola Nordmann' };
 
-  const context = data?.context;
+  // const context = data?.context;
 
   return (
     <MainContentLayout

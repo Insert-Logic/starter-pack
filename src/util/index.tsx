@@ -163,3 +163,10 @@ export const resolveTrigger = (
   if ('race' in trigger) return { type: 'race', config: trigger.race };
   throw new Error('Unhandled trigger variant');
 };
+
+export const getAccessDeniedMessage = (userRoles: string[], allowedRoles: string[]): string => {
+  const yourRoles = userRoles.length > 0 ? userRoles.join(', ') : 'none';
+  const requiredRoles = allowedRoles.length > 0 ? allowedRoles.join(', ') : 'none';
+
+  return `You don't have permission to view this content. Your role(s): ${yourRoles}. Required role(s): ${requiredRoles}. Please contact your administrator if you believe this is an error.`;
+};
