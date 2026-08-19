@@ -1,6 +1,6 @@
-import { useQuery, type UseQueryOptions, type UseQueryResult } from '@tanstack/react-query';
+import { useMutation, useQuery, type UseQueryOptions, type UseQueryResult } from '@tanstack/react-query';
 import { apiRoutes, apiStatus } from './index';
-import type { RuntimeResponse, StageType } from '@insertlogic/o8-lib';
+import { showToast, type RuntimeResponse, type StageType } from '@insertlogic/o8-lib';
 import type { RuntimeByStateResponse } from 'types/api-response';
 
 type VisitNextInput = {
@@ -74,7 +74,57 @@ export const runtimeService = {
 
     return (await result.json()) as RuntimeResponse;
   },
+  resolve: async function (_id: string) {
+    const result = await fetch(apiRoutes.resolveRuntime(_id.toString()), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (result.status !== apiStatus.get()) {
+      throw new Error(`Failed to resolve case. Returned status ${result.status}`);
+    }
+
+    return (await result.json()) as RuntimeResponse;
+  },
+  delete: async function (_id: string) {
+    const result = await fetch(apiRoutes.deleteRuntime(_id.toString()), {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!result.ok) {
+      throw new Error(`Not deleted. Returned status ${result.status}`);
+    }
+  },
 };
+
+export function useRuntimeResolveMutation() {
+  return useMutation({
+    mutationFn: runtimeService.resolve,
+    mutationKey: ['runtime_resolve'],
+    onSuccess: () => {
+      const date = new Date();
+      showToast('Resolved case successfully', `${date.toLocaleString()}`, 'default');
+    },
+    onError: (error, _) => {
+      showToast('FAILED to resolve case', `Reason:  ${error.message}`, 'error');
+    },
+  });
+}
+
+export function useRuntimeDeleteMutation() {
+  return useMutation({
+    mutationFn: runtimeService.delete,
+    onMutate: () => {},
+    onError: (error: Error) => {
+      showToast('FAILED to delete', `Reason: ${error.message}`, 'error');
+    },
+    mutationKey: ['runtime_delete'],
+  });
+}
 
 const isClient = typeof window !== 'undefined';
 

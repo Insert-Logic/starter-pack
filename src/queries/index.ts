@@ -15,4 +15,6 @@ export const apiRoutes = {
   getRuntimeByQuery: (queryString: string) => `/api/runtime?${queryString}`,
   createRuntime: (name: string) => `/api/runtime/create/logic_name/${name}`,
   visitNext: (name: string) => `/api/runtime/visit_next/${name}`,
+  resolveRuntime: (id: string) => `/api/runtime/resolve/${id}`,
+  deleteRuntime: (id: string) => `/api/runtime/${id}`,
 };
