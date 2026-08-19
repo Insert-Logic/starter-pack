@@ -1,5 +1,5 @@
-import { ActionAreaButtons } from '@insertlogic/o8-lib';
-import { ActionAreaTitle } from '@insertlogic/o8-lib';
+import { ActionAreaButtons } from './action-area-buttons-custom';
+import { ActionAreaTitle } from './action-area-title-custom';
 
 interface ActionAreaProps {
   children: React.ReactNode;
@@ -31,7 +31,7 @@ export const ActionArea = ({
           isWithdrawPossible={isWithdrawPossible}
           onWithdrawn={onWithdrawn}
           onCancel={onCancel}
-          onsubmit={onSubmit}
+          onSubmit={onSubmit}
         />
       )}
     </div>

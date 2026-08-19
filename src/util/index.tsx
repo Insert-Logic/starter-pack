@@ -5,7 +5,7 @@ import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import Cookies from 'js-cookie';
 import type { Mode } from '@insertlogic/o8-lib';
-import type { RuntimeByStateResponse } from 'types/api-response';
+import type { RuntimeByStateResponse, RuntimeTrigger, RuntimeTriggerConfig, TriggerVariant } from 'types/api-response';
 import type { GetContextByIds } from 'logics/event-driven/get-context-by-ids/-context';
 
 export const zodParse = async <Schema extends z.ZodTypeAny, Input extends Record<any, any>>(
@@ -148,4 +148,18 @@ export const mergeRuntimeContexts = (
     ...runtime,
     context: contextMap.get(runtime._id.$oid) ?? runtime.context,
   }));
+};
+
+export const resolveTrigger = (
+  trigger: RuntimeTrigger,
+): {
+  type: TriggerVariant;
+  config: RuntimeTriggerConfig;
+} => {
+  if ('parallel' in trigger) return { type: 'parallel', config: trigger.parallel };
+  if ('parent' in trigger) return { type: 'parent', config: trigger.parent };
+  if ('extension' in trigger) return { type: 'extension', config: trigger.extension };
+  if ('fireandforget' in trigger) return { type: 'fireandforget', config: trigger.fireandforget };
+  if ('race' in trigger) return { type: 'race', config: trigger.race };
+  throw new Error('Unhandled trigger variant');
 };

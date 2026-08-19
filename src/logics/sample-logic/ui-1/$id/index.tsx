@@ -1,42 +1,19 @@
 import { createFileRoute, useLoaderData } from '@tanstack/react-router';
 import { SidebarDetails } from 'components/sidebar-details';
-import {
-  ErrorLayout,
-  MainContentLayout,
-  PendingComponent,
-  runtimeService,
-  type RuntimeByStateResponse,
-} from '@insertlogic/o8-lib';
-import type { SidebarData } from '../../-context';
+import { ErrorLayout, MainContentLayout, PendingComponent } from '@insertlogic/o8-lib';
 import { stages } from '../../-shared/util/logic-steps';
 import { ExampleUI } from '../-components';
+import { taskService } from 'queries/task';
 
 const service = {
   getById: async function (id: string) {
     if (id === 'preview') {
-      // Return mock data
+      // Return mock data for your UI
       let data = { targetAssignment: { interfaceOption: 'first-step', _id: '', name: '' }, context: {} };
       return data;
     } else {
-      const tasks = (await runtimeService.getRuntimeByState('task')) as RuntimeByStateResponse[];
-      const currentTask = tasks.find(t => t._id === id);
-
-      // Create a flow to get context for task
-      // const newBody: GetInphasingContext = {
-      //   runtimeId: id,
-      //   workQueue: workQueue,
-      // };
-
-      // const contextResponse = (await runtimeService.create({
-      //   name: 'get-in-phasing-context',
-      //   body: newBody,
-      // })) as any;
-      // const newTask = {
-      //   ...currentTask,
-      //   context: contextResponse.context.context,
-      // };
-
-      return currentTask;
+      const task = await taskService.getById(id);
+      return task;
     }
   },
 };
@@ -53,7 +30,7 @@ export const Route = createFileRoute('/sample-logic/ui-1/$id/')({
   //     queryKey: ['get-projects'],
   //     queryFn: () =>
   //       runtimeService.create({
-  //         name: 'mtt-handle-project-storage',
+  //         name: 'handle-project-storage',
   //         body: getProjectsBody,
   //       }),
   //   }),
@@ -64,7 +41,7 @@ export const Route = createFileRoute('/sample-logic/ui-1/$id/')({
 
 function RouteComponent() {
   const data = useLoaderData({ from: Route.id });
-  const sidebarData: SidebarData = { name: 'Ola Nordmann' };
+  const sidebarData = { name: 'Ola Nordmann' };
 
   const context = data?.context;
 
@@ -77,7 +54,7 @@ function RouteComponent() {
       keyDetails={<SidebarDetails data={sidebarData} />}
       keyDetailsDefaultCollapsed={true}
       keyDetailsTitle={'Key Information'}
-      showRightDrawer={true}
+      showRightDrawer={false}
       rightDrawerDefaultCollapsed={true}
       rightDrawerTitle="Process Details">
       <ExampleUI />

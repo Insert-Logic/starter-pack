@@ -1,8 +1,9 @@
-import type { RuntimeByStateResponse, RuntimeByWaitStateResponse } from 'types/api-response';
+import type { RuntimeByStateResponse } from 'types/api-response';
 import { runtimeService } from './runtime';
 import type { GetRuntimeContext } from 'api/get-runtime-context/-context';
 import type { GetChildrenByIdContext } from 'api/get-children-by-id/-context';
 import type { GetContextByIds } from 'api/get-context-by-ids/-context';
+import { resolveTrigger } from 'util/index';
 
 export const taskService = {
   // Retrieve one task with context by id
@@ -29,7 +30,7 @@ export const taskService = {
   },
   getWaitById: async function (id: string, childLogic: string) {
     // GET current task context
-    const parentTasks = (await runtimeService.getRuntimeByState('wait')) as RuntimeByWaitStateResponse[];
+    const parentTasks = (await runtimeService.getRuntimeByState('wait')) as RuntimeByStateResponse[];
     const currentTask = parentTasks.find(t => t._id.$oid === id);
     const newBody: GetRuntimeContext = {
       runtimeId: id,
@@ -94,7 +95,10 @@ export const taskService = {
       });
 
       // How you compare in sidebar to find completed steps
-      completedSteps = completedChildren.map(c => `approval-${c?.trigger?.parent}`);
+
+      completedSteps = completedChildren.map(c =>
+        c.trigger ? `approval-${resolveTrigger(c?.trigger).config.nodeId}` : `approval-something`,
+      );
       //   completedSteps = completedChildren.map(c => `approval-${(c?.context)?.role}`);
     }
 

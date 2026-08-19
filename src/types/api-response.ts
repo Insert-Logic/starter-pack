@@ -47,22 +47,9 @@ export type RuntimeTriggerConfig = {
   nodeId: string;
 };
 
-export type RuntimeTrigger =
-  | {
-      parallel: RuntimeTriggerConfig;
-    }
-  | {
-      parent: RuntimeTriggerConfig;
-    }
-  | {
-      extension: RuntimeTriggerConfig;
-    }
-  | {
-      fireandforget: RuntimeTriggerConfig;
-    }
-  | {
-      race: RuntimeTriggerConfig;
-    };
+export type RuntimeTrigger = {
+  [K in TriggerVariant]: { [P in K]: RuntimeTriggerConfig };
+}[TriggerVariant];
 
 export type TriggerVariant = 'parallel' | 'parent' | 'extension' | 'fireandforget' | 'race';
 
