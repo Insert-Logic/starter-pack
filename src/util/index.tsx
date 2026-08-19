@@ -1,10 +1,12 @@
-import type { ValidationErrors,  ZodParseResponse,} from 'types/index';
+import type { ValidationErrors, ZodParseResponse } from 'types/index';
 import { z, ZodEffects, ZodObject, type ZodRawShape, type ZodTypeAny } from 'zod';
 import { fromZodError } from 'zod-validation-error';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import Cookies from 'js-cookie';
 import type { Mode } from '@insertlogic/o8-lib';
+import type { RuntimeByStateResponse, RuntimeTrigger, RuntimeTriggerConfig, TriggerVariant } from 'types/api-response';
+import type { GetContextByIds } from 'logics/event-driven/get-context-by-ids/-context';
 
 export const zodParse = async <Schema extends z.ZodTypeAny, Input extends Record<any, any>>(
   schema: Schema,
@@ -134,4 +136,37 @@ export const getTheme = async (): Promise<Mode> => {
   }
 
   return theme as Mode;
+};
+
+export const mergeRuntimeContexts = (
+  runtimes: RuntimeByStateResponse[],
+  contextResponse: GetContextByIds,
+): RuntimeByStateResponse[] => {
+  const contextMap = new Map((contextResponse.items ?? []).map(item => [item._id.$oid, item.context]));
+
+  return runtimes.map(runtime => ({
+    ...runtime,
+    context: contextMap.get(runtime._id.$oid) ?? runtime.context,
+  }));
+};
+
+export const resolveTrigger = (
+  trigger: RuntimeTrigger,
+): {
+  type: TriggerVariant;
+  config: RuntimeTriggerConfig;
+} => {
+  if ('parallel' in trigger) return { type: 'parallel', config: trigger.parallel };
+  if ('parent' in trigger) return { type: 'parent', config: trigger.parent };
+  if ('extension' in trigger) return { type: 'extension', config: trigger.extension };
+  if ('fireandforget' in trigger) return { type: 'fireandforget', config: trigger.fireandforget };
+  if ('race' in trigger) return { type: 'race', config: trigger.race };
+  throw new Error('Unhandled trigger variant');
+};
+
+export const getAccessDeniedMessage = (userRoles: string[], allowedRoles: string[]): string => {
+  const yourRoles = userRoles.length > 0 ? userRoles.join(', ') : 'none';
+  const requiredRoles = allowedRoles.length > 0 ? allowedRoles.join(', ') : 'none';
+
+  return `You don't have permission to view this content. Your role(s): ${yourRoles}. Required role(s): ${requiredRoles}. Please contact your administrator if you believe this is an error.`;
 };

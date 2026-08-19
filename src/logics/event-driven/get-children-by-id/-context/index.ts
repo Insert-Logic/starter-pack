@@ -1,4 +1,4 @@
-import type { Trigger } from '@insertlogic/o8-lib';
+import type { Trigger } from 'types/api-response';
 
 //@logic-context
 export type GetChildrenByIdContext = {
