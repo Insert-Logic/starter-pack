@@ -1,11 +1,7 @@
 import { useQuery, type UseQueryOptions, type UseQueryResult } from '@tanstack/react-query';
 import { apiRoutes, apiStatus } from './index';
-import type {
-  RuntimeByStateResponse,
-  RuntimeByWaitStateResponse,
-  RuntimeResponse,
-  StageType,
-} from '@insertlogic/o8-lib';
+import type { RuntimeResponse, StageType } from '@insertlogic/o8-lib';
+import type { RuntimeByStateResponse } from 'types/api-response';
 
 type VisitNextInput = {
   _id: string;
@@ -23,7 +19,7 @@ export const runtimeService = {
       throw new Error(`Failed to get runtime data`);
     }
 
-    const data = (await result.json()) as RuntimeByStateResponse[] | RuntimeByWaitStateResponse[];
+    const data = (await result.json()) as RuntimeByStateResponse[];
 
     return data;
   },
@@ -84,9 +80,9 @@ const isClient = typeof window !== 'undefined';
 
 export function useGetRuntimeByStateQuery(
   state: StageType,
-  options?: UseQueryOptions<RuntimeByStateResponse[] | RuntimeByWaitStateResponse[], Error>,
-): UseQueryResult<RuntimeByStateResponse[] | RuntimeByWaitStateResponse[], Error> {
-  return useQuery<RuntimeByStateResponse[] | RuntimeByWaitStateResponse[], Error>({
+  options?: UseQueryOptions<RuntimeByStateResponse[], Error>,
+): UseQueryResult<RuntimeByStateResponse[], Error> {
+  return useQuery<RuntimeByStateResponse[], Error>({
     queryKey: ['get_runtime_by_state', state],
     queryFn: () => runtimeService.getRuntimeByState(state),
     enabled: !!state && isClient,

@@ -1,10 +1,12 @@
-import type { ValidationErrors,  ZodParseResponse,} from 'types/index';
+import type { ValidationErrors, ZodParseResponse } from 'types/index';
 import { z, ZodEffects, ZodObject, type ZodRawShape, type ZodTypeAny } from 'zod';
 import { fromZodError } from 'zod-validation-error';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import Cookies from 'js-cookie';
 import type { Mode } from '@insertlogic/o8-lib';
+import type { RuntimeByStateResponse } from 'types/api-response';
+import type { GetContextByIds } from 'logics/event-driven/get-context-by-ids/-context';
 
 export const zodParse = async <Schema extends z.ZodTypeAny, Input extends Record<any, any>>(
   schema: Schema,
@@ -134,4 +136,16 @@ export const getTheme = async (): Promise<Mode> => {
   }
 
   return theme as Mode;
+};
+
+export const mergeRuntimeContexts = (
+  runtimes: RuntimeByStateResponse[],
+  contextResponse: GetContextByIds,
+): RuntimeByStateResponse[] => {
+  const contextMap = new Map((contextResponse.items ?? []).map(item => [item._id.$oid, item.context]));
+
+  return runtimes.map(runtime => ({
+    ...runtime,
+    context: contextMap.get(runtime._id.$oid) ?? runtime.context,
+  }));
 };
